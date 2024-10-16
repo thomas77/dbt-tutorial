@@ -1,0 +1,14 @@
+jaffle_shop:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: pgfoeuz-rs26596  # Sans "https://"
+      user: TLETELLIER
+      password: Thomas2024!!!
+      role: RL_DBT_TUTORIAL
+      database: ANALYTICS
+      warehouse: COMPUTE_WH
+      schema: PUBLIC
+      threads: 4
+
