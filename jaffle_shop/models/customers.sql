@@ -1,3 +1,4 @@
+--just a comment
 with customers as (
 
     select
