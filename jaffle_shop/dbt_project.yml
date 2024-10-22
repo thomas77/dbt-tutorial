@@ -36,6 +36,7 @@ models:
       +materialized: view
     example2:
       +materialized: table   
-
+  elementary:
+    +schema: "elementary"
 
 
