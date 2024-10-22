@@ -1,5 +1,5 @@
---just a comment aaa
-with customers as (
+--just a comment aaa dd
+with customers as ( 
 
     select
         id as customer_id,
