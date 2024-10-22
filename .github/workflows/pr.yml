@@ -1,0 +1,46 @@
+name: dbt_integration
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+    action:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+# Ajouter une étape pour installer sqlfluff
+            - name: Set up Python environment
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.x'  # Utiliser la version Python compatible avec dbt
+
+            - name: Install sqlfluff
+              run: |
+                python -m venv venv
+                source venv/bin/activate
+                pip install sqlfluff
+
+            # Exécuter sqlfluff pour vérifier la syntaxe SQL
+            - name: Lint SQL files with sqlfluff
+              run: |
+                source venv/bin/activate
+                sqlfluff lint jaffle_shop/models/**/*.sql --dialect snowflake  # Remplacer 'snowflake' par le dialecte approprié si nécessaire
+              continue-on-error: false  # Échouer si le lint échoue
+
+            - name: dbt-run
+              id: dbt-run
+              uses: mwhitaker/dbt-action@profdir
+              with:
+                dbt_command: "dbt run"
+                dbt_project_folder: "jaffle_shop"
+                dbt_profile_folder: "jaffle_shop"
+              env:
+                DBT_USER: ${{ secrets.DBT_SF_USER }}
+                DBT_PASSWORD: ${{ secrets.DBT_SF_PASSWORD }}
+            
+            - name: Get the result
+              run: echo "${{ steps.dbt-run.outputs.result }}"
+              shell: bash 

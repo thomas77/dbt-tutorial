@@ -3,7 +3,9 @@
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
 name: 'jaffle_shop'
-version: '2.0.0'
+version: '1.0.0'
+config-version: 2
+
 
 # This setting configures which "profile" dbt uses for this project.
 profile: 'jaffle_shop'
@@ -36,6 +38,7 @@ models:
       +materialized: view
     example2:
       +materialized: table   
-
+  elementary:
+    +schema: "elementary"
 
 
