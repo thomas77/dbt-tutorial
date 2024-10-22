@@ -11,6 +11,25 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
+# Ajouter une étape pour installer sqlfluff
+            - name: Set up Python environment
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.x'  # Utiliser la version Python compatible avec dbt
+
+            - name: Install sqlfluff
+              run: |
+                python -m venv venv
+                source venv/bin/activate
+                pip install sqlfluff
+
+            # Exécuter sqlfluff pour vérifier la syntaxe SQL
+            - name: Lint SQL files with sqlfluff
+              run: |
+                source venv/bin/activate
+                sqlfluff lint jaffle_shop/models/**/*.sql
+              continue-on-error: false  # Échouer si le lint échoue
+
             - name: dbt-run
               id: dbt-run
               uses: mwhitaker/dbt-action@profdir
