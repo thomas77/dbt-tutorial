@@ -28,7 +28,7 @@ jobs:
               run: |
                 source venv/bin/activate
                 sqlfluff lint jaffle_shop/models/**/*.sql --dialect snowflake  # Remplacer 'snowflake' par le dialecte approprié si nécessaire
-                continue-on-error: false  # Échouer si le lint échoue
+              continue-on-error: false  # Échouer si le lint échoue
 
             - name: dbt-run
               id: dbt-run
